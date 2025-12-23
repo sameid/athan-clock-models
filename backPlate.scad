@@ -10,24 +10,30 @@ module mainPostHoles() {
 
 module backPlate() {
 
-	// Amplifier mount
-	translate([ -35 + 12.10, -5.5, 0 ]) cube([ 4, 11, 20.71 ]);
-	translate([ -38 + 12.10, -5.5, 20.71 ]) cube([ 7, 11, 4 ]);
+	width = 55.1;
+	radius = 17;
 
-	// Arduino mount
-	translate([ 30, -6.25, 0 ]) cube([ 4, 12.5, 26.66 ]);
-	translate([ 27, -6.25, 26.66 ]) cube([ 7, 12.5, 4 ]);
+	translate([ radius, radius, 0 ]) {
 
-	translate([ -20, -20, 0 ]) {
+		// Amplifier mount
+		ampWidth = 11;
+		translate([ .10, (width / 2) - (ampWidth / 2), 0 ]) cube([ 4, ampWidth, 20.71 ]);
+		translate([ .10 - 3, (width / 2) - (ampWidth / 2), 20.71 ]) cube([ 7, ampWidth, 4 ]);
 
+		// Arduino mount
+		esp32Width = 12.5;
+		translate([ width + 10, (width / 2) - (esp32Width / 2), 0 ]) cube([ 4, esp32Width, 26.66 ]);
+		translate([ width + 7, (width / 2) - (esp32Width / 2), 26.66 ]) cube([ 7, esp32Width, 4 ]);
+
+		rotate([ 0, 0, 90 ]) translate([ width + 21.5, width - 52, -2 ]) import("usbc.stl", convexity = 10);
 		difference() {
 			minkowski() {
-				cube([ 40, 40, 2 ]);
-				cylinder(h = 1, r = 15, center = false, $fn = 100);
+				cube([ width, width, 2 ]);
+				cylinder(h = 1, r = radius, center = false, $fn = 100);
 			}
 
-			mainPostHoles();
-			rotate([ 0, 0, 90 ]) translate([ 69, 18.36, -3 ]) import("usbc.stl", convexity = 10);
+			// mainPostHoles();
+			// rotate([ 0, 0, 90 ]) translate([ width + 29, width - 21.64, -3 ]) import("usbc.stl", convexity = 10);
 		}
 	}
 }
